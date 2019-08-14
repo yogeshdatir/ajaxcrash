@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 2 - Get data from a local JSON file</title>
+</head>
+
+<body>
+    <button id="b1">Get user</button>
+    <button id="b2">Get users</button>
+    <br><br>
+    <div id="user"></div>
+    <div id="users"></div>
+</body>
+
+<script>
+    document.querySelector('#b1').addEventListener('click', getUser)
+
+    function getUser() {
+        var xhr = new XMLHttpRequest()
+
+        xhr.open('GET', 'user.json', true)
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                var user = JSON.parse(this.responseText)
+                document.querySelector('#user').innerText = user.name
+            } else if (this.status == 404) {
+                document.querySelector('#user').innerText = 'Not Found'
+            }
+        }
+
+        xhr.onerror = function() {
+            console.log('error')
+        }
+
+        xhr.send()
+    }
+
+    document.querySelector('#b2').addEventListener('click', getUsers)
+
+    function getUsers() {
+        var xhr = new XMLHttpRequest()
+
+        xhr.open('GET', 'users.json', true)
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                var div = document.querySelector('#users')
+
+                var users = JSON.parse(this.responseText)
+
+                var output = ''
+
+                for (var i in users) {
+                    output += "<ol>" +
+                        "<li>ID: " + users[i].id + "</li>" +
+                        "<li>Name: " + users[i].name + "</li>" +
+                        "<li>Email: " + users[i].email + "</li>" +
+                        "</ol>"
+                }
+
+                div.innerHTML = output
+            }
+        }
+
+        xhr.send()
+
+    }
+</script>
+
+</html>

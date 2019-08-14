@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 4 - Ajax and Forms, insert into database</title>
+</head>
+
+<body>
+
+    <!-- <button id="button">Try</button> -->
+
+    <h1>Normal GET form</h1>
+    <form action="formProcess.jsp" method="GET">
+        <input type="text" name="name" id="name">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h1>AJAX GET form</h1>
+    <form id="getForm">
+        <input type="text" name="name" id="name1">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h1>Normal POST form</h1>
+    <form action="formProcess.jsp" method="POST">
+        <input type="text" name="name" id="name">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h1>AJAX POST form</h1>
+    <form id="getForm1">
+        <input type="text" name="name" id="name2">
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+<script>
+    // document.querySelector('#button').addEventListener('click', sendForm)
+
+    document.querySelector('#getForm').addEventListener('submit', sendForm)
+
+    document.querySelector('#getForm1').addEventListener('submit', sendPostForm)
+
+    function sendForm(e) {
+        e.preventDefault()
+        var xhr = new XMLHttpRequest()
+
+        var name = document.querySelector('#name1').value
+
+        xhr.open('GET', 'formProcess.jsp?name=' + name, true)
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+
+        xhr.send()
+    }
+
+    function sendPostForm(e) {
+        e.preventDefault()
+        var xhr = new XMLHttpRequest()
+
+        var name = document.querySelector('#name2').value
+        var params = "name=" + name
+
+        xhr.open('POST', 'insert.jsp', true)
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+
+        xhr.send(params)
+    }
+</script>
+
+</html>

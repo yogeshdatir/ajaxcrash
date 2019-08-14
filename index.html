@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 1 - Get data from a local text file</title>
+</head>
+
+<body>
+    <button id="button">Get</button>
+    <br><br>
+    <div id="text"></div>
+</body>
+
+<script>
+    // Create event listener
+    document.querySelector('#button').addEventListener('click', ajaxDemo)
+
+    // create ajax callback
+    function ajaxDemo() {
+        // create a xhr object
+        var xhr = new XMLHttpRequest()
+
+        // open/establish the connection
+        xhr.open('GET', './sample.txt', true)
+
+        // using onload
+        xhr.onload = function() {
+            if (this.status == 200) {
+                document.querySelector('#text').innerText = this.responseText
+            } else if (this.status == 404) {
+                document.querySelector('#text').innerText = 'Not Found'
+            }
+        }
+
+        xhr.onerror = function() {
+            console.log('error')
+        }
+
+        // using onreadystatechange
+        // xhr.onreadystatechange = function() {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         console.log(this.response)
+        //     }
+        // }
+
+        // sends request
+        xhr.send()
+
+        // readyState	Holds the status of the XMLHttpRequest. 
+        //             0: request not initialized 
+        //             1: server connection established
+        //             2: request received 
+        //             3: processing request 
+        //             4: request finished and response is ready
+        // status	200: "OK"
+        //         403: "Forbidden"
+        //         404: "Page not found"
+    }
+</script>
+
+</html>
