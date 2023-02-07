@@ -80,6 +80,27 @@
 
         xhr.send(params)
     }
+    
+    
+    function postRequestWithJSON() {
+        var data = {
+            pricingFrom: document.querySelector('#name2').value
+        }
+        var xhr = new xhrRequest(); // new HttpRequest instance 
+        var theUrl = "/json-handler";
+        xhr.open("POST", theUrl);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(data));
+
+        xhr.onload = function () {
+            if (this.status == 200) {
+                console.log(this.responseText)
+            }
+        }
+
+        xhr.send(params)
+    }
+    
 </script>
 
 </html>
